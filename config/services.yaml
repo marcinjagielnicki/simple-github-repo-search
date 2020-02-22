@@ -10,6 +10,8 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            string $defaultRepositoriesProvider: 'github'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -23,5 +25,18 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\DataProvider\Github\Api\GithubApiClient:
+        autowire: true
+        bind:
+            string $username: '%env(GITHUB_USERNAME)%'
+            string $password: '%env(GITHUB_PASSWORD)%'
+
+    _instanceof:
+        App\DataProvider\RepositoriesDataProviderInterface:
+            public: true
+            tags: ['app.repositories_data_provider']
+
+    App\DataProvider\RepositoriesDataProvider:
+        autowire: true
+        arguments:
+            - !tagged_iterator app.repositories_data_provider

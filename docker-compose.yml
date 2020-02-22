@@ -1,0 +1,31 @@
+###############################################################################
+#                          Generated on phpdocker.io                          #
+###############################################################################
+version: "3.1"
+services:
+
+    webserver:
+      image: nginx:alpine
+      container_name: ciklum-webserver
+      working_dir: /application
+      volumes:
+          - .:/application
+          - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+       - "8081:80"
+
+    php-fpm:
+      build: phpdocker/php-fpm
+      container_name: ciklum-php-fpm
+      working_dir: /application
+      volumes:
+        - .:/application
+        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
+
+    node:
+      image: node:10
+      container_name: ciklum--node
+      working_dir: /application
+      volumes:
+        - .:/application
+      entrypoint: sleep 999999999
