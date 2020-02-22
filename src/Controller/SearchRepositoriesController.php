@@ -4,25 +4,21 @@
 namespace App\Controller;
 
 use App\Form\SearchType;
-use App\Http\SearchActionHandler;
+use App\Http\SearchActionHandlerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 class SearchRepositoriesController extends AbstractController
 {
     /**
-     * @var SearchActionHandler
+     * @var SearchActionHandlerInterface
      */
-    private SearchActionHandler $searchActionHandler;
+    private SearchActionHandlerInterface $searchActionHandler;
 
-    public function __construct(SearchActionHandler $searchActionHandler)
+    public function __construct(SearchActionHandlerInterface $searchActionHandler)
     {
         $this->searchActionHandler = $searchActionHandler;
     }

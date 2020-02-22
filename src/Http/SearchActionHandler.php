@@ -5,7 +5,7 @@ namespace App\Http;
 
 use App\DataProvider\RepositoriesDataProvider;
 
-class SearchActionHandler
+class SearchActionHandler implements SearchActionHandlerInterface
 {
     const PER_PAGE_RESULTS = 6;
 

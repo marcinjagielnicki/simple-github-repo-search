@@ -35,6 +35,7 @@ export function repositoriesFetch(page = 1, filters) {
             dispatch(repositoriesFetchSuccess(ret.data, page));
         }).catch((ret)=>{
             dispatch(repositoriesFetchError(ret.data));
+            alert('Error occurred while performed your query.');
         });
     };
 }

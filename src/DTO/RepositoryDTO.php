@@ -3,12 +3,15 @@
 
 namespace App\DTO;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class RepositoryDTO
 {
     /**
      * Short name of repository.
      *
      * @var string
+     * @Assert\NotBlank()
      */
     protected string $name;
 
@@ -16,6 +19,7 @@ class RepositoryDTO
      * Full name of repository.
      *
      * @var string
+     * @Assert\NotBlank()
      */
     protected string $fullName;
 
@@ -23,6 +27,7 @@ class RepositoryDTO
      * URL to repository.
      *
      * @var string
+     * @Assert\NotBlank()
      */
     protected string $url;
 

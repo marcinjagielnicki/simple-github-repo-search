@@ -3,8 +3,14 @@
 
 namespace App\DTO;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class LanguageDTO
 {
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     */
     protected string $name;
 
     public function __construct(string $name)
