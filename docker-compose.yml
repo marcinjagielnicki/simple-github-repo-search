@@ -1,12 +1,9 @@
-###############################################################################
-#                          Generated on phpdocker.io                          #
-###############################################################################
 version: "3.1"
 services:
 
     webserver:
       image: nginx:alpine
-      container_name: ciklum-webserver
+      container_name: github-search-webserver
       working_dir: /application
       volumes:
           - .:/application
@@ -16,7 +13,7 @@ services:
 
     php-fpm:
       build: phpdocker/php-fpm
-      container_name: ciklum-php-fpm
+      container_name: github-search-php-fpm
       working_dir: /application
       volumes:
         - .:/application
@@ -24,7 +21,7 @@ services:
 
     node:
       image: node:10
-      container_name: ciklum--node
+      container_name: github-search-node
       working_dir: /application
       volumes:
         - .:/application
