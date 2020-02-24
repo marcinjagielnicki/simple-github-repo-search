@@ -56,15 +56,7 @@ class GithubDataProvider implements RepositoriesDataProviderInterface
         $data = $this->apiClient->searchRepositories($query);
         $repositories = [];
         foreach ($data['items'] as $repositoryData) {
-            $repositoryData['languages'] = $this->loadLanguages($repositoryData['full_name']);
-            $repositoryData['forks_list'] = $this->loadForks($repositoryData['full_name']);
-            if ($repositoryData['fork']) {
-                $forkInfo = $this->getForkedFromData($repositoryData['full_name']);
-                if ($forkInfo) {
-                    $repositoryData['parent'] = $forkInfo;
-                }
-            }
-
+            $repositoryData = $this->generateRepositoryData($repositoryData);
             $repositories[] = $this->repositoryDTOFactory->fromArray($repositoryData);
         }
         return new PaginatedListResults($repositories, $data['total_count'], $page, $limit);
@@ -90,6 +82,19 @@ class GithubDataProvider implements RepositoriesDataProviderInterface
     {
         $data = $this->apiClient->getRepositoryInfo($repositoryName);
         return $data['parent'] ?? [];
+    }
+
+    protected function generateRepositoryData(array $repositoryData): array
+    {
+        $repositoryData['languages'] = $this->loadLanguages($repositoryData['full_name']);
+        $repositoryData['forks_list'] = $this->loadForks($repositoryData['full_name']);
+        if ($repositoryData['fork']) {
+            $forkInfo = $this->getForkedFromData($repositoryData['full_name']);
+            if ($forkInfo) {
+                $repositoryData['parent'] = $forkInfo;
+            }
+        }
+        return $repositoryData;
     }
 
     protected function prepareQuery(?string $query): ?string
